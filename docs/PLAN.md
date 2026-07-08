@@ -26,10 +26,11 @@ The headline. Field Log + hero Forecast card.
 - [x] Forecast reads Species Profile threshold (ADR-0005), served via fixtures for now
 - Photo capture + live actuation deferred (snackbar stubs); real clock in header deferred
 
-## Phase 2 — History tab  `[ ]`
+## Phase 2 — History tab  `[x]`
 
-- [ ] Telemetry list — per-enclosure DO/pH/temp + status pill + timestamp, All/Today/Week filter
-- [ ] Achievements grid (badges, earned count) — model from mockup
+- [x] Telemetry list — per-enclosure DO/pH/temp + status pill + timestamp, All/Today/Week filter
+- [x] Achievements grid (badges, earned count) — model from mockup
+- Filter windows overlap over latest-only fixtures; bite once real time-series exists
 
 ## Phase 3 — Map + Add-Pond  `[ ]`
 

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/achievement.dart';
 import '../models/enclosure.dart';
 import '../models/field_log.dart';
 import '../models/forecast.dart';
@@ -26,6 +27,10 @@ abstract interface class ForecastRepository {
 
 abstract interface class FieldLogRepository {
   Future<FieldLogEntry> latestFor(String enclosureId);
+}
+
+abstract interface class AchievementRepository {
+  Future<List<Achievement>> all();
 }
 
 // --- Fixture implementations ---
@@ -56,6 +61,11 @@ class FixtureFieldLogRepository implements FieldLogRepository {
       fixtureFieldLog(enclosureId);
 }
 
+class FixtureAchievementRepository implements AchievementRepository {
+  @override
+  Future<List<Achievement>> all() async => fixtureAchievements;
+}
+
 // --- Providers (swap the override here to go live) ---
 
 final enclosureRepositoryProvider =
@@ -66,6 +76,8 @@ final forecastRepositoryProvider =
     Provider<ForecastRepository>((_) => FixtureForecastRepository());
 final fieldLogRepositoryProvider =
     Provider<FieldLogRepository>((_) => FixtureFieldLogRepository());
+final achievementRepositoryProvider =
+    Provider<AchievementRepository>((_) => FixtureAchievementRepository());
 
 // The enclosure the Log tab is focused on. Read-only for now; becomes a
 // Notifier once the operator can switch enclosures (later phase).
@@ -83,3 +95,5 @@ final forecastProvider = FutureProvider.family<Forecast, String>(
     (ref, id) => ref.watch(forecastRepositoryProvider).forEnclosure(id));
 final fieldLogProvider = FutureProvider.family<FieldLogEntry, String>(
     (ref, id) => ref.watch(fieldLogRepositoryProvider).latestFor(id));
+final achievementsProvider = FutureProvider<List<Achievement>>(
+    (ref) => ref.watch(achievementRepositoryProvider).all());

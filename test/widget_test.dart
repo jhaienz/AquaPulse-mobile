@@ -39,6 +39,22 @@ void main() {
     expect(find.text('CRITICAL'), findsWidgets); // C-2 at DO 2.8
   });
 
+  testWidgets('History shows filter chips and achievements count', (tester) async {
+    await tester.pumpWidget(
+      const ProviderScope(child: MaterialApp(home: AppShell())),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('History'));
+    await tester.pumpAndSettle();
+
+    for (final chip in ['All', 'Today', 'Week']) {
+      expect(find.text(chip), findsOneWidget);
+    }
+    expect(find.text('ACHIEVEMENTS'), findsOneWidget);
+    expect(find.text('9 / 12 earned'), findsOneWidget); // 9 earned fixtures
+    expect(find.text('DO Defender'), findsOneWidget);
+  });
+
   testWidgets('Log tab shows the Field Log and Forecast card', (tester) async {
     await tester.pumpWidget(
       const ProviderScope(child: MaterialApp(home: AppShell())),

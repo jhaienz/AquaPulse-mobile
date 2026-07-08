@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+
+import '../models/achievement.dart';
 import '../models/enclosure.dart';
 import '../models/field_log.dart';
 import '../models/forecast.dart';
@@ -74,3 +77,19 @@ FieldLogEntry fixtureFieldLog(String enclosureId) => FieldLogEntry(
 
 /// The enclosure the Log tab is focused on (mockup opens on A-1).
 const fixtureSelectedEnclosureId = 'A-1';
+
+/// Achievement badges — 9 of 12 earned, matching the mockup grid.
+const fixtureAchievements = <Achievement>[
+  Achievement('DO Defender', Icons.water_drop, earned: true),
+  Achievement('7-Day Streak', Icons.local_fire_department, earned: true),
+  Achievement('Night Watch', Icons.nightlight_round, earned: true),
+  Achievement('Quick Response', Icons.bolt, earned: true),
+  Achievement('Zero Critical', Icons.shield_outlined, earned: true),
+  Achievement('Top Operator', Icons.star, earned: true),
+  Achievement('Early Warning', Icons.visibility_outlined, earned: true),
+  Achievement('Precision Log', Icons.track_changes, earned: true),
+  Achievement('Field Veteran', Icons.workspace_premium, earned: true),
+  Achievement('Data Streak', Icons.trending_up, earned: false),
+  Achievement('Dawn Patrol', Icons.wb_sunny_outlined, earned: false),
+  Achievement('Mesh Master', Icons.sensors, earned: false),
+];
