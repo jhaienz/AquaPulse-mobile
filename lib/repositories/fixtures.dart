@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/achievement.dart';
+import '../models/alert.dart';
 import '../models/enclosure.dart';
 import '../models/field_log.dart';
 import '../models/forecast.dart';
@@ -78,6 +79,18 @@ FieldLogEntry fixtureFieldLog(String enclosureId) => FieldLogEntry(
 
 /// The enclosure the Log tab is focused on (mockup opens on A-1).
 const fixtureSelectedEnclosureId = 'A-1';
+
+/// Alerts inbox (mockup) — mixed severity, some unacknowledged.
+final fixtureAlerts = <Alert>[
+  Alert(id: 1, enclosureId: 'C-2', severity: EnclosureStatus.critical,
+      message: 'DO critical: 2.8 mg/L — threshold 4.0 mg/L', time: DateTime(2026, 7, 6, 14, 32)),
+  Alert(id: 2, enclosureId: 'B-3', severity: EnclosureStatus.warning,
+      message: 'pH spike: 8.6 — elevated alkalinity detected', time: DateTime(2026, 7, 6, 13, 15)),
+  Alert(id: 3, enclosureId: 'B-1', severity: EnclosureStatus.critical,
+      message: 'Temperature: 31.2 °C — heat stress risk', time: DateTime(2026, 7, 6, 12, 48), acknowledged: true),
+  Alert(id: 4, enclosureId: 'A-1', severity: EnclosureStatus.warning,
+      message: 'Turbidity elevated: 18 NTU — inspect inlet gate', time: DateTime(2026, 7, 6, 11, 30), acknowledged: true),
+];
 
 /// Mesh node link states (matches the mockup — D-1 offline).
 const fixtureMeshNodes = <MeshNode>[

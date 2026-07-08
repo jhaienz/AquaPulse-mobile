@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/achievement.dart';
+import '../models/alert.dart';
 import '../models/enclosure.dart';
 import '../models/field_log.dart';
 import '../models/forecast.dart';
@@ -33,6 +34,10 @@ abstract interface class FieldLogRepository {
 
 abstract interface class AchievementRepository {
   Future<List<Achievement>> all();
+}
+
+abstract interface class AlertRepository {
+  Future<List<Alert>> all();
 }
 
 // --- Fixture implementations ---
@@ -76,6 +81,11 @@ class FixtureAchievementRepository implements AchievementRepository {
   Future<List<Achievement>> all() async => fixtureAchievements;
 }
 
+class FixtureAlertRepository implements AlertRepository {
+  @override
+  Future<List<Alert>> all() async => fixtureAlerts;
+}
+
 // --- Providers (swap the override here to go live) ---
 
 final enclosureRepositoryProvider =
@@ -88,6 +98,8 @@ final fieldLogRepositoryProvider =
     Provider<FieldLogRepository>((_) => FixtureFieldLogRepository());
 final achievementRepositoryProvider =
     Provider<AchievementRepository>((_) => FixtureAchievementRepository());
+final alertRepositoryProvider =
+    Provider<AlertRepository>((_) => FixtureAlertRepository());
 
 // The enclosure the Log tab is focused on. Read-only for now; becomes a
 // Notifier once the operator can switch enclosures (later phase).
@@ -107,6 +119,8 @@ final fieldLogProvider = FutureProvider.family<FieldLogEntry, String>(
     (ref, id) => ref.watch(fieldLogRepositoryProvider).latestFor(id));
 final achievementsProvider = FutureProvider<List<Achievement>>(
     (ref) => ref.watch(achievementRepositoryProvider).all());
+final alertsProvider = FutureProvider<List<Alert>>(
+    (ref) => ref.watch(alertRepositoryProvider).all());
 
 // Field Mode sync snapshot (fixture; real sync state is Phase 7).
 final fieldSyncProvider = Provider<FieldSyncStatus>((_) => fixtureFieldSync);

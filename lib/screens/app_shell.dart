@@ -5,7 +5,7 @@ import 'history_screen.dart';
 import 'log_screen.dart';
 import 'map_screen.dart';
 import 'mesh_screen.dart';
-import 'placeholder_screen.dart';
+import 'settings_screen.dart';
 
 /// Root shell: 5 fixed tabs via IndexedStack (no go_router — YAGNI).
 /// Tab order matches the figma bottom nav: Log · History · Mesh · Map · Settings.
@@ -24,7 +24,7 @@ class _AppShellState extends State<AppShell> {
     HistoryScreen(),
     MeshScreen(),
     MapScreen(),
-    PlaceholderScreen(title: 'Settings', phase: 'Phase 5 — toggles + alerts', icon: Icons.settings_outlined),
+    SettingsScreen(),
   ];
 
   @override

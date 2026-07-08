@@ -48,10 +48,11 @@ Enclosure registry — forecasts need enclosures to attach to.
 - [x] Aeration checklist (checkable; screen-local state, disk persistence deferred to Phase 7)
 - [x] Operator profile + stats (entries/badges/streak)
 
-## Phase 5 — Settings  `[ ]`
+## Phase 5 — Settings  `[x]`
 
-- [ ] Toggles (Edge AI, Mesh Auto-Sync, Night Mode, Push, Haptics)
-- [ ] Alerts inbox — critical/warning, acknowledged/unacknowledged
+- [x] Toggles (Edge AI, Mesh Auto-Sync, Night Mode, Push, Haptics)
+- [x] Alerts inbox — critical/warning filter, tap-to-acknowledge
+- Toggle/ack state screen-local; disk persistence deferred to Phase 7. Deleted the placeholder screen (all tabs real now).
 
 ## Phase 6 — Backend (FastAPI on Gateway)  `[ ]`
 

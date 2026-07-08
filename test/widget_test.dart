@@ -76,6 +76,36 @@ void main() {
     expect(find.textContaining('Added'), findsOneWidget); // snackbar
   });
 
+  testWidgets('Settings shows toggles and alert acknowledge works', (tester) async {
+    tester.view.physicalSize = const Size(500, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      const ProviderScope(child: MaterialApp(home: AppShell())),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Edge AI Processing'), findsOneWidget);
+    expect(find.text('ALERTS'), findsOneWidget);
+    // C-2 and B-3 alerts start unacknowledged.
+    expect(find.text('UNACKNOWLEDGED'), findsNWidgets(2));
+
+    // Tap the C-2 critical alert to acknowledge it.
+    await tester.tap(find.textContaining('DO critical'));
+    await tester.pumpAndSettle();
+    expect(find.text('UNACKNOWLEDGED'), findsNWidgets(1));
+
+    // Filter to Warning hides the (critical) remaining unacked context.
+    await tester.tap(find.text('Warning'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('DO critical'), findsNothing);
+    expect(find.textContaining('pH spike'), findsOneWidget);
+  });
+
   testWidgets('Mesh tab renders and checklist toggles', (tester) async {
     // Tall surface so the whole Mesh tab renders without lazy-scrolling.
     tester.view.physicalSize = const Size(500, 1800);
