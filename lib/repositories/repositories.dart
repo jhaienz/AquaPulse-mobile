@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/enclosure.dart';
+import '../models/field_log.dart';
 import '../models/forecast.dart';
 import '../models/telemetry.dart';
 import 'fixtures.dart';
@@ -21,6 +22,10 @@ abstract interface class TelemetryRepository {
 
 abstract interface class ForecastRepository {
   Future<Forecast> forEnclosure(String enclosureId);
+}
+
+abstract interface class FieldLogRepository {
+  Future<FieldLogEntry> latestFor(String enclosureId);
 }
 
 // --- Fixture implementations ---
@@ -45,6 +50,12 @@ class FixtureForecastRepository implements ForecastRepository {
       fixtureForecast(enclosureId);
 }
 
+class FixtureFieldLogRepository implements FieldLogRepository {
+  @override
+  Future<FieldLogEntry> latestFor(String enclosureId) async =>
+      fixtureFieldLog(enclosureId);
+}
+
 // --- Providers (swap the override here to go live) ---
 
 final enclosureRepositoryProvider =
@@ -53,9 +64,22 @@ final telemetryRepositoryProvider =
     Provider<TelemetryRepository>((_) => FixtureTelemetryRepository());
 final forecastRepositoryProvider =
     Provider<ForecastRepository>((_) => FixtureForecastRepository());
+final fieldLogRepositoryProvider =
+    Provider<FieldLogRepository>((_) => FixtureFieldLogRepository());
+
+// The enclosure the Log tab is focused on. Read-only for now; becomes a
+// Notifier once the operator can switch enclosures (later phase).
+final selectedEnclosureIdProvider =
+    Provider<String>((_) => fixtureSelectedEnclosureId);
 
 // Convenience async views for screens.
 final enclosuresProvider = FutureProvider<List<Enclosure>>(
     (ref) => ref.watch(enclosureRepositoryProvider).all());
 final latestTelemetryProvider = FutureProvider<Map<String, TelemetryReading>>(
     (ref) => ref.watch(telemetryRepositoryProvider).latest());
+final enclosureByIdProvider = FutureProvider.family<Enclosure?, String>(
+    (ref, id) => ref.watch(enclosureRepositoryProvider).byId(id));
+final forecastProvider = FutureProvider.family<Forecast, String>(
+    (ref, id) => ref.watch(forecastRepositoryProvider).forEnclosure(id));
+final fieldLogProvider = FutureProvider.family<FieldLogEntry, String>(
+    (ref, id) => ref.watch(fieldLogRepositoryProvider).latestFor(id));

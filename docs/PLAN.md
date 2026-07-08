@@ -17,13 +17,14 @@ Foundation every screen sits in.
 - [x] Repository interfaces (`EnclosureRepository`, `TelemetryRepository`, `ForecastRepository`) + fixture implementations
 - [x] Placeholder screen per tab (History wired to fixtures as seam proof)
 
-## Phase 1 — Log tab  `[ ]`
+## Phase 1 — Log tab  `[x]`
 
 The headline. Field Log + hero Forecast card.
 
-- [ ] Field Log entry (note, photo, status tags: DO/pH/Turbidity/Temp)
-- [ ] Forecast card — "Hypoxia likely in Nh", DO trend chart (history solid + forecast dashed), threshold line, recommended-action button
-- [ ] Forecast reads Species Profile threshold (ADR-0005), served via fixtures for now
+- [x] Field Log entry (note, photo placeholder, status tags: DO/pH/Turbidity/Temp)
+- [x] Forecast card — "Hypoxia likely in Nh", DO trend chart (history solid + forecast dashed), threshold line, recommended-action button
+- [x] Forecast reads Species Profile threshold (ADR-0005), served via fixtures for now
+- Photo capture + live actuation deferred (snackbar stubs); real clock in header deferred
 
 ## Phase 2 — History tab  `[ ]`
 

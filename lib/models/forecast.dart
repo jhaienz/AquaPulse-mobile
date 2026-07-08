@@ -9,7 +9,8 @@ class Forecast {
   final double thresholdMgL; // from the species profile (ADR-0005)
   final double doRatePerHour; // recent DO slope, mg/L per hour (negative = falling)
   final String headline; // e.g. "Hypoxia likely in 6h"
-  final String recommendedAction; // e.g. "Pre-stage aeration array"
+  final String recommendedAction; // button label, e.g. "Pre-stage aeration array"
+  final String recommendationDetail; // e.g. "+30% surface aeration starting 20:00"
   final List<ForecastPoint> curve; // history + projected, for the trend chart
 
   const Forecast({
@@ -21,8 +22,13 @@ class Forecast {
     required this.doRatePerHour,
     required this.headline,
     required this.recommendedAction,
+    required this.recommendationDetail,
     required this.curve,
   });
+
+  /// Clock time DO is projected to cross the threshold, or null if no crash.
+  DateTime? get thresholdCrossing =>
+      timeToThreshold == null ? null : issuedAt.add(timeToThreshold!);
 }
 
 /// One point on the forecast trend chart. `projected=false` is observed

@@ -1,7 +1,9 @@
 import '../models/enclosure.dart';
+import '../models/field_log.dart';
 import '../models/forecast.dart';
 import '../models/species.dart';
 import '../models/telemetry.dart';
+import '../theme.dart';
 
 /// Hardcoded sample data for the "screens first" phase (ADR-0004).
 /// Mirrors the figma: ponds A-1, B-3, C-2, A-2, D-1, B-1 with mixed status.
@@ -49,6 +51,26 @@ Forecast fixtureForecast(String enclosureId) {
     doRatePerHour: -0.43,
     headline: 'Hypoxia likely in 6h',
     recommendedAction: 'Pre-stage aeration array',
+    recommendationDetail: '+30% surface aeration starting 20:00',
     curve: curve,
   );
 }
+
+/// Latest field-log entry per enclosure. Matches the mockup's A-1 entry.
+FieldLogEntry fixtureFieldLog(String enclosureId) => FieldLogEntry(
+      enclosureId: enclosureId,
+      timestamp: _now,
+      note: 'Water clarity reduced at inlet gate. Algae bloom observed along '
+          'NW bank — surface foam increasing. DO dropping faster than morning '
+          'projection.',
+      hasPhoto: true,
+      tags: const [
+        FieldTag('DO Critical', EnclosureStatus.critical),
+        FieldTag('pH Alert', EnclosureStatus.critical),
+        FieldTag('Turbidity High', EnclosureStatus.warning),
+        FieldTag('Temp Normal', EnclosureStatus.normal),
+      ],
+    );
+
+/// The enclosure the Log tab is focused on (mockup opens on A-1).
+const fixtureSelectedEnclosureId = 'A-1';

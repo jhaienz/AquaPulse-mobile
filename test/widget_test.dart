@@ -6,6 +6,7 @@ import 'package:aquapulse/screens/app_shell.dart';
 import 'package:aquapulse/theme.dart';
 import 'package:aquapulse/models/enclosure.dart';
 import 'package:aquapulse/models/species.dart';
+import 'package:aquapulse/repositories/fixtures.dart';
 
 void main() {
   test('statusFromDo maps DO against the species profile', () {
@@ -13,6 +14,12 @@ void main() {
     expect(statusFromDo(7.2, tilapia), EnclosureStatus.normal);
     expect(statusFromDo(3.9, tilapia), EnclosureStatus.warning);
     expect(statusFromDo(2.8, tilapia), EnclosureStatus.critical);
+  });
+
+  test('forecast threshold crossing = issuedAt + timeToThreshold', () {
+    final f = fixtureForecast('A-1');
+    expect(f.thresholdCrossing, f.issuedAt.add(f.timeToThreshold!));
+    expect(f.thresholdCrossing!.hour, 20); // 14:32 + 6h
   });
 
   testWidgets('shell shows 5 tabs and History renders fixture data',
@@ -30,5 +37,19 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Pond A-1'), findsOneWidget);
     expect(find.text('CRITICAL'), findsWidgets); // C-2 at DO 2.8
+  });
+
+  testWidgets('Log tab shows the Field Log and Forecast card', (tester) async {
+    await tester.pumpWidget(
+      const ProviderScope(child: MaterialApp(home: AppShell())),
+    );
+    await tester.pumpAndSettle();
+
+    // Log is the default tab.
+    expect(find.text('FIELD LOG'), findsOneWidget);
+    expect(find.text('AI FORECAST'), findsOneWidget);
+    expect(find.text('Hypoxia likely in 6h'), findsOneWidget);
+    expect(find.text('DO Critical'), findsOneWidget);
+    expect(find.textContaining('Pre-stage aeration array'), findsWidgets);
   });
 }
