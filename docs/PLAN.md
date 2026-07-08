@@ -42,11 +42,11 @@ Enclosure registry — forecasts need enclosures to attach to.
 - [x] First mutating path: `EnclosureRepository.add()` + list invalidation
 - Real geo map skipped (needs online tiles, fights offline); schematic node graph instead
 
-## Phase 4 — Mesh tab  `[ ]`
+## Phase 4 — Mesh tab  `[x]`
 
-- [ ] Mesh health gauge + node latency/status list
-- [ ] Aeration checklist (checkable, persisted locally)
-- [ ] Operator profile + stats (entries/badges/streak)
+- [x] Mesh health gauge (CustomPaint arc) + node latency/status grid
+- [x] Aeration checklist (checkable; screen-local state, disk persistence deferred to Phase 7)
+- [x] Operator profile + stats (entries/badges/streak)
 
 ## Phase 5 — Settings  `[ ]`
 

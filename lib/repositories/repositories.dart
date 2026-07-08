@@ -4,6 +4,7 @@ import '../models/achievement.dart';
 import '../models/enclosure.dart';
 import '../models/field_log.dart';
 import '../models/forecast.dart';
+import '../models/mesh.dart';
 import '../models/telemetry.dart';
 import 'fixtures.dart';
 
@@ -109,3 +110,8 @@ final achievementsProvider = FutureProvider<List<Achievement>>(
 
 // Field Mode sync snapshot (fixture; real sync state is Phase 7).
 final fieldSyncProvider = Provider<FieldSyncStatus>((_) => fixtureFieldSync);
+
+// Mesh tab (read-only fixtures).
+final meshNodesProvider = Provider<List<MeshNode>>((_) => fixtureMeshNodes);
+final meshHealthProvider = Provider<int>((_) => fixtureMeshHealthPercent);
+final operatorProvider = Provider<Operator>((_) => fixtureOperator);

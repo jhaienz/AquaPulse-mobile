@@ -76,6 +76,32 @@ void main() {
     expect(find.textContaining('Added'), findsOneWidget); // snackbar
   });
 
+  testWidgets('Mesh tab renders and checklist toggles', (tester) async {
+    // Tall surface so the whole Mesh tab renders without lazy-scrolling.
+    tester.view.physicalSize = const Size(500, 1800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      const ProviderScope(child: MaterialApp(home: AppShell())),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Mesh'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('92%'), findsOneWidget);
+    expect(find.text('MESH HEALTH'), findsOneWidget);
+    expect(find.text('Node A-1'), findsOneWidget);
+    expect(find.text('Jonas Reyes'), findsOneWidget);
+    expect(find.text('247'), findsOneWidget);
+    expect(find.text('2/5'), findsOneWidget);
+
+    await tester.tap(find.text('Test emergency pump — B-3'));
+    await tester.pumpAndSettle();
+    expect(find.text('3/5'), findsOneWidget);
+  });
+
   testWidgets('History shows filter chips and achievements count', (tester) async {
     await tester.pumpWidget(
       const ProviderScope(child: MaterialApp(home: AppShell())),

@@ -4,6 +4,7 @@ import '../models/achievement.dart';
 import '../models/enclosure.dart';
 import '../models/field_log.dart';
 import '../models/forecast.dart';
+import '../models/mesh.dart';
 import '../models/species.dart';
 import '../models/telemetry.dart';
 import '../theme.dart';
@@ -77,6 +78,36 @@ FieldLogEntry fixtureFieldLog(String enclosureId) => FieldLogEntry(
 
 /// The enclosure the Log tab is focused on (mockup opens on A-1).
 const fixtureSelectedEnclosureId = 'A-1';
+
+/// Mesh node link states (matches the mockup — D-1 offline).
+const fixtureMeshNodes = <MeshNode>[
+  MeshNode('A-1', 12),
+  MeshNode('B-3', 18),
+  MeshNode('C-2', 47),
+  MeshNode('A-2', 15),
+  MeshNode('D-1', null),
+  MeshNode('B-1', 22),
+];
+
+const fixtureMeshHealthPercent = 92;
+
+/// Aeration/maintenance checklist — 2 of 5 done (mockup).
+const fixtureChecklist = <ChecklistItem>[
+  ChecklistItem('Check main diffuser output', done: true),
+  ChecklistItem('Inspect inlet gate valves', done: true),
+  ChecklistItem('Test emergency pump — B-3'),
+  ChecklistItem('Log maintenance note'),
+  ChecklistItem('Calibrate DO probe — A-1'),
+];
+
+const fixtureOperator = Operator(
+  name: 'Jonas Reyes',
+  id: 'AQ-2847',
+  role: 'Senior Operator',
+  entries: 247,
+  badges: 18,
+  streakDays: 14,
+);
 
 /// Field Mode sync snapshot for the Map panel. Real sync state is Phase 7;
 /// this is the fixture stand-in.
