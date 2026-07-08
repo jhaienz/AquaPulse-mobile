@@ -7,6 +7,7 @@ import 'package:aquapulse/theme.dart';
 import 'package:aquapulse/models/enclosure.dart';
 import 'package:aquapulse/models/species.dart';
 import 'package:aquapulse/repositories/fixtures.dart';
+import 'package:aquapulse/repositories/repositories.dart';
 
 void main() {
   test('statusFromDo maps DO against the species profile', () {
@@ -37,6 +38,42 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Pond A-1'), findsOneWidget);
     expect(find.text('CRITICAL'), findsWidgets); // C-2 at DO 2.8
+  });
+
+  test('enclosure repository add grows the list and is findable', () async {
+    final repo = FixtureEnclosureRepository();
+    final before = (await repo.all()).length;
+    await repo.add(const Enclosure(
+      id: 'P-99', name: 'Pond 99 — Test', species: Species.shrimp,
+      sizeHectares: 1, latitude: 14.5, longitude: 120.9,
+    ));
+    expect((await repo.all()).length, before + 1);
+    expect((await repo.byId('P-99'))?.name, 'Pond 99 — Test');
+  });
+
+  testWidgets('Add-Pond sheet adds an enclosure and closes', (tester) async {
+    await tester.pumpWidget(
+      const ProviderScope(child: MaterialApp(home: AppShell())),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Map'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('FIELD MODE'), findsOneWidget);
+    await tester.tap(find.text('Add Pond'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add a Pond'), findsOneWidget);
+    await tester.enterText(find.byType(TextField).first, 'Pond 7 — North Basin');
+    await tester.tap(find.text('Tilapia'));
+    await tester.pump();
+    await tester.ensureVisible(find.text('Add Pond to Farm'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Add Pond to Farm'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add a Pond'), findsNothing); // sheet closed
+    expect(find.textContaining('Added'), findsOneWidget); // snackbar
   });
 
   testWidgets('History shows filter chips and achievements count', (tester) async {

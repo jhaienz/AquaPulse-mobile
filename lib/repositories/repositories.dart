@@ -14,6 +14,7 @@ import 'fixtures.dart';
 abstract interface class EnclosureRepository {
   Future<List<Enclosure>> all();
   Future<Enclosure?> byId(String id);
+  Future<void> add(Enclosure enclosure);
 }
 
 abstract interface class TelemetryRepository {
@@ -36,12 +37,20 @@ abstract interface class AchievementRepository {
 // --- Fixture implementations ---
 
 class FixtureEnclosureRepository implements EnclosureRepository {
+  // Seeded from fixtures, mutable so Add-Pond has somewhere to write.
+  // Held by a singleton Provider, so additions persist across reads until the
+  // HTTP repo replaces it.
+  final List<Enclosure> _items = [...fixtureEnclosures];
+
   @override
-  Future<List<Enclosure>> all() async => fixtureEnclosures;
+  Future<List<Enclosure>> all() async => List.unmodifiable(_items);
 
   @override
   Future<Enclosure?> byId(String id) async =>
-      fixtureEnclosures.where((e) => e.id == id).firstOrNull;
+      _items.where((e) => e.id == id).firstOrNull;
+
+  @override
+  Future<void> add(Enclosure enclosure) async => _items.add(enclosure);
 }
 
 class FixtureTelemetryRepository implements TelemetryRepository {
@@ -97,3 +106,6 @@ final fieldLogProvider = FutureProvider.family<FieldLogEntry, String>(
     (ref, id) => ref.watch(fieldLogRepositoryProvider).latestFor(id));
 final achievementsProvider = FutureProvider<List<Achievement>>(
     (ref) => ref.watch(achievementRepositoryProvider).all());
+
+// Field Mode sync snapshot (fixture; real sync state is Phase 7).
+final fieldSyncProvider = Provider<FieldSyncStatus>((_) => fixtureFieldSync);

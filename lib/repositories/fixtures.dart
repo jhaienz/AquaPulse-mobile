@@ -78,6 +78,28 @@ FieldLogEntry fixtureFieldLog(String enclosureId) => FieldLogEntry(
 /// The enclosure the Log tab is focused on (mockup opens on A-1).
 const fixtureSelectedEnclosureId = 'A-1';
 
+/// Field Mode sync snapshot for the Map panel. Real sync state is Phase 7;
+/// this is the fixture stand-in.
+class FieldSyncStatus {
+  final int cachedEnclosures;
+  final int cachedRecords;
+  final int lastSyncMinutesAgo;
+  final double syncedFraction; // 0..1
+  const FieldSyncStatus({
+    required this.cachedEnclosures,
+    required this.cachedRecords,
+    required this.lastSyncMinutesAgo,
+    required this.syncedFraction,
+  });
+}
+
+const fixtureFieldSync = FieldSyncStatus(
+  cachedEnclosures: 6,
+  cachedRecords: 1247,
+  lastSyncMinutesAgo: 4,
+  syncedFraction: 0.78,
+);
+
 /// Achievement badges — 9 of 12 earned, matching the mockup grid.
 const fixtureAchievements = <Achievement>[
   Achievement('DO Defender', Icons.water_drop, earned: true),

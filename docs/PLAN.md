@@ -32,13 +32,15 @@ The headline. Field Log + hero Forecast card.
 - [x] Achievements grid (badges, earned count) — model from mockup
 - Filter windows overlap over latest-only fixtures; bite once real time-series exists
 
-## Phase 3 — Map + Add-Pond  `[ ]`
+## Phase 3 — Map + Add-Pond  `[x]`
 
 Enclosure registry — forecasts need enclosures to attach to.
 
-- [ ] Map — spatial enclosure layout, status colors, DO/Ammonia filter, Field Mode sync banner
-- [ ] Add-Pond form — name, **Species** select (Tilapia/Bangus/Shrimp/Crab/Milkfish), size (ha), GPS, notes
-- [ ] Seeded Species Profile table (ADR-0005)
+- [x] Map — schematic mesh layout, status colors, DO/Ammonia filter, Field Mode sync banner
+- [x] Add-Pond form — name, **Species** select (Tilapia/Bangus/Shrimp/Crab/Milkfish), size (ha), GPS, notes
+- [x] Seeded Species Profile table (ADR-0005) — already wired in Phase 0, consumed here
+- [x] First mutating path: `EnclosureRepository.add()` + list invalidation
+- Real geo map skipped (needs online tiles, fights offline); schematic node graph instead
 
 ## Phase 4 — Mesh tab  `[ ]`
 

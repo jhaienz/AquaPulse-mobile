@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import 'history_screen.dart';
 import 'log_screen.dart';
+import 'map_screen.dart';
 import 'placeholder_screen.dart';
 
 /// Root shell: 5 fixed tabs via IndexedStack (no go_router — YAGNI).
@@ -21,7 +22,7 @@ class _AppShellState extends State<AppShell> {
     LogScreen(),
     HistoryScreen(),
     PlaceholderScreen(title: 'Mesh', phase: 'Phase 4 — node health + checklist', icon: Icons.sensors),
-    PlaceholderScreen(title: 'Map', phase: 'Phase 3 — enclosure map + Add-Pond', icon: Icons.location_on_outlined),
+    MapScreen(),
     PlaceholderScreen(title: 'Settings', phase: 'Phase 5 — toggles + alerts', icon: Icons.settings_outlined),
   ];
 
